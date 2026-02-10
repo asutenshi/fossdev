@@ -19,13 +19,23 @@ def test_devide_zero():
     a = 2
     b = 0
     try:
-        sum(a, b)
+        devide(a, b)
         assert False
     except ValueError as e:
         print("Test (zero-devision) passed")
+
+
+def test_devision_prohibited():
+  try:
+    devide("A", "B")
+    print("Test string-devision fails")
+    assert False
+  except ValueError as e:
+    print("Test string-devision passed")
 
 
 if __name__ == "__main__":
     test_sum()
     test_devide()
     test_devide_zero()
+    test_devision_prohibited()
