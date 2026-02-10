@@ -6,5 +6,7 @@ def sum(a, b):
 
 def devide(a, b):
     if b == 0:
-        raise ValueError("Denominator could not be zero")
+      raise ValueError("Denominator could not be zero")
+    if isinstance(a, str) or isinstance(b, str):
+      raise ValueError("Args could not be strings")
     return a / b
