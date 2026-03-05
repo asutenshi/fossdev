@@ -1,7 +1,7 @@
 # import sys
 # sys.path.append("../src")
 
-from math_demo import add, add_with_bug
+from math_demo import add, add_with_bug, calculate_tax_bugged, calculate_tax
 
 
 def test_addition():
@@ -50,6 +50,28 @@ def test_addition_commutative():
     assert add(9, 5) == 14
     assert add(5, 9) == 14
     print("Test COMMUTATIVE PASSED")
+    
+    
+def test_tax_calculator_pesticide():
+    assert calculate_tax_bugged(1000) == 150
+    assert calculate_tax_bugged(100) == 15
+    assert calculate_tax_bugged(10) == 1.5
+    assert calculate_tax_bugged(1) == 0.15
+    assert calculate_tax_bugged(234) == 35.1
+    # only integers don't cover some tests
+    # assert calculate_tax_bugged(2.34) == 0.35 # 0.351
+    print("Test TAX BAGGED CALCULATOR PASSED")
+    
+    
+def test_tax_calculator():
+    assert calculate_tax(1000) == 150
+    assert calculate_tax(100) == 15
+    assert calculate_tax(10) == 1.5
+    assert calculate_tax(1) == 0.15
+    assert calculate_tax(234) == 35.1
+    # float may give us more test cases
+    assert calculate_tax(2.34) == 0.35 # 0.351
+    print("Test TAX UNBUGGED CALCULATOR PASSED")
 
 
 if __name__ == "__main__":
@@ -59,3 +81,5 @@ if __name__ == "__main__":
     # test_addition_overkill()
     test_addition_clussters()
     test_addition_commutative()
+    test_tax_calculator_pesticide()
+    test_tax_calculator()
