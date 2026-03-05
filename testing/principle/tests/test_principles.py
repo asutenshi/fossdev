@@ -46,10 +46,16 @@ def test_addition_clussters():
     print("Test CLUSSTERS ADDITION PASSED")
 
 
+def test_addition_commutative():
+    assert add(9, 5) == 14
+    assert add(5, 9) == 14
+    print("Test COMMUTATIVE PASSED")
+
+
 if __name__ == "__main__":
     test_addition()
     test_addition_with_bug()
     test_addition_duplicate()
     # test_addition_overkill()
     test_addition_clussters()
-    
+    test_addition_commutative()
