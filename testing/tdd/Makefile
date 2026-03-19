@@ -13,4 +13,10 @@ build:
 test-pytest:
 	python -m pytest
 
-test: install-dep build test-pytest
+create-venv:
+	python -m venv .venv
+
+activate-venv:
+	. ./.venv/bin/activate
+
+test: create-venv activate-venv install-dep build test-pytest
