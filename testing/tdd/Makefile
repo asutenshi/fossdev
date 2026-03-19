@@ -12,3 +12,5 @@ build:
 
 test-pytest:
 	python -m pytest
+
+test: install-dep build test-pytest
