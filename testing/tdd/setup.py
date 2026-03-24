@@ -13,7 +13,7 @@ else:
     long_description_content_type = "text/plain"
 
 setup(
-    name="ndfl",
+    name="ndfl-soft-dev",
     version="0.0.0",
     description="Краткое описание вашего пакета ndfl",
     long_description=long_description,
