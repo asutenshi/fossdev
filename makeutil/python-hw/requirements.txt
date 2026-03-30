@@ -1,1 +1,3 @@
 request
+numpy
+fastapi
