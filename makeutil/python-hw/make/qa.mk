@@ -6,3 +6,5 @@ lint:
 
 format:
 	$(PYTHON) -m black src/
+
+check: lint typecheck
