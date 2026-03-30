@@ -3,3 +3,5 @@ numpy
 fastapi
 mypy
 types-requests
+flake8
+black
