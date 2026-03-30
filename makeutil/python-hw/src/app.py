@@ -1,3 +1,3 @@
-import requests
+# import requests
 
 print("Running app")
