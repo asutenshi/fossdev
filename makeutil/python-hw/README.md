@@ -1,4 +1,4 @@
-# FOSSDEV Project: Автоматизация жизненного цикла и публикация пакета
+# FOSSDEV Project: Автоматизация жизненного цикла Python-проекта
 
 Данный репозиторий является учебным монорепозиторием для курса
 **"Культура разработки ПО с открытым исходным кодом"**.
@@ -11,9 +11,8 @@
 
 1. **Изоляцию окружения** — автоматическое создание `venv`, чтобы зависимости
    устанавливались в окружение проекта, а не в системный интерпретатор.
-2. **Контроль качества (QA)** — проверку типов (`mypy`), стилей (`flake8`)
-   и запуск тестов (`pytest`).
-3. **Дистрибуцию** — сборку артефактов (`.whl`, `.tar.gz`) и деплой на TestPyPI.
+2. **Контроль качества (QA)** — проверку корректности зависимостей (`check-requirements`),
+   стилей кода (`flake8`), форматирования (`black`) и типов (`mypy`).
 
 ### Архитектура: иерархические Makefile
 
@@ -23,15 +22,21 @@
 
 ---
 
-## 2. Проект на TestPyPI
-
-**[РЕАЛЬНАЯ_ССЫЛКА_НА_TEST_PYPI]**
-
-### Установка пакета
+## 2. Начало работы
 
 ```bash
-pip install --index-url https://test.pypi.org/simple/ your-package-name
+# 1. Клонировать репозиторий
+git clone https://github.com/asutenshi/fossdev/tree/feature/makeutil-pypi-release
+cd fossdev_Artem/makeutil/python-hw
+
+# 2. Установить окружение и пакет
+make install
 ```
+
+`make install` последовательно:
+- создаёт виртуальное окружение `.venv`
+- устанавливает зависимости из `requirements.txt`
+- устанавливает пакет в режиме разработки (`pip install -e .`)
 
 ---
 
@@ -45,32 +50,32 @@ source .venv/bin/activate
 # 2. Установить зависимости
 pip install -r requirements.txt
 
-# 3. Проверка типов
-mypy src/
+# 3. Установить пакет в режиме разработки
+pip install -e .
 
-# 4. Проверка стилей
+# 4. Проверка зависимостей
+python tools/check_requirements.py
+
+# 5. Проверка стилей
 flake8 src/
 
-# 5. Запуск тестов
-pytest
+# 6. Форматирование кода
+black src/
 
-# 6. Сборка пакета
-python setup.py sdist bdist_wheel
-
-# 7. Публикация на TestPyPI
-twine upload --repository testpypi dist/*
+# 7. Проверка типов
+mypy src/
 ```
 
 ---
 
 ## 4. Автоматизация через Makefile
 
-| Таргет         | Описание                                      |
-|----------------|-----------------------------------------------|
-| `make venv`    | Создаёт виртуальное окружение `.venv`         |
-| `make install` | Устанавливает зависимости из `requirements.txt`|
-| `make lint`    | Проверка типов (`mypy`) и стилей (`flake8`)   |
-| `make test`    | Запускает тесты через `pytest`                |
-| `make build`   | Собирает `.whl` и `.tar.gz` артефакты         |
-| `make release` | Публикует пакет на TestPyPI через `twine`     |
-| `make all`     | Полный цикл: venv → install → lint → test → build |
+| Таргет                  | Описание                                              |
+|-------------------------|-------------------------------------------------------|
+| `make install`          | Создаёт `.venv`, ставит зависимости, `pip install -e .` |
+| `make check-requirements` | Проверяет корректность установленных зависимостей    |
+| `make lint`             | Проверка стилей кода (`flake8`)                       |
+| `make format`           | Форматирование кода (`black`)                         |
+| `make typecheck`        | Статический анализ типов (`mypy`)                     |
+| `make check`            | Запускает `lint` и `typecheck` последовательно        |
+| `make all-check`        | Полный цикл: `install` → `check`                      |
