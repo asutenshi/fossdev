@@ -12,9 +12,9 @@ setup(
     description="Example utilities for FOSSDEV homework with make (module examples in src/)",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/asutenshi/fossdev/tree/feature/makeutil-pypi-release/makeutil/python-hw",
+    url="https://github.com/asutenshi/fossdev/tree/feature/makeutil-pypi-release",
     author="Asu Tenshi",
-    author_email="you@example.com",
+    author_email="asutenshi@example.com",
     py_modules=["app", "calc", "example", "service"],
     package_dir={"": "src"},
     include_package_data=True,
@@ -30,6 +30,6 @@ setup(
         "Operating System :: OS Independent",
     ],
     project_urls={
-        "Source": "https://github.com/asutenshi/fossdev/tree/feature/makeutil-pypi-release/makeutil/python-hw",
+        "Source": "https://github.com/asutenshi/fossdev/tree/feature/makeutil-pypi-release",
     },
 )
