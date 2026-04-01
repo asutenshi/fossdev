@@ -27,7 +27,7 @@
 ```bash
 # 1. Клонировать репозиторий
 git clone https://github.com/asutenshi/fossdev/tree/feature/makeutil-pypi-release
-cd fossdev_Artem/makeutil/python-hw
+cd fossdev/makeutil/python-hw
 
 # 2. Установить окружение и пакет
 make install
