@@ -10,7 +10,7 @@ install_dep: make_venv
 	$(PIP) install -r requirements.txt
 
 install: install_dep
-# 	$(PIP) install -e .
+	$(PIP) install -e .
 
 start_file:
 	$(PYTHON) src/app.py
