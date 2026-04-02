@@ -1,9 +1,9 @@
 .. sales documentation master file, created by
-   sphinx-quickstart on Thu Apr  2 14:01:51 2026.
+   sphinx-quickstart on Thu Apr  2 06:01:49 2026.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-sales documentation
+Sales documentation
 ===================
 
 Add your content using ``reStructuredText`` syntax. See the
@@ -17,3 +17,5 @@ documentation for details.
 
    QUICKSTART
    USAGE
+   api/modules
+   
