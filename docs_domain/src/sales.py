@@ -1,7 +1,22 @@
 # TODO refactor this module using buisness logic names
 
 
-def _parse_record(line: str):
+def _parse_record(line: str) -> dict | None:
+    """Parsing information for one sale.
+    
+    Parameters:
+        line - string that contain sale record in form of comma-separatet values
+        
+    Returns:
+        sale - sale information in form of dict
+        
+    Raises:
+        ValueError
+    """
+    
+    if line == '':
+        raise ValueError('Got zero length line')
+    
     sale = line.strip().split(",")
     if len(sale) != 4:  # according specs each sale is defined by four fields
         return None
