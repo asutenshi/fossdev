@@ -8,10 +8,10 @@ from pydantic import BaseModel, Field
 app = FastAPI(title="Order Service")
 
 
-PRODUCT_SERVICE_URL = os.getenv(
-    "PRODUCT_SERVICE_URL",
-    "http://127.0.0.1:8001",
-)
+PRODUCT_SERVICE_IP = os.getenv("PRODUCT_SERVICE_IP", "http://127.0.0.1")
+PRODUCT_SERVICE_PORT = os.getenv("PRODUCT_SERVICE_PORT", "8001")
+
+PRODUCT_SERVICE_URL = PRODUCT_SERVICE_IP + ":" + PRODUCT_SERVICE_PORT
 
 
 class OrderRequest(BaseModel):
