@@ -1,0 +1,23 @@
+services:
+  product-service:
+    build: ./product_service/
+    ports:
+      - "8001:8000"
+    networks:
+      - test_network
+
+  order-service:
+    build: ./order_service/
+    ports:
+      - "8002:8000"
+    environment:
+      PRODUCT_SERVICE_IP: http://product-service
+      PRODUCT_SERVICE_PORT: 8000
+    depends_on:
+      - product-service
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge
