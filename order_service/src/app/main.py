@@ -4,14 +4,28 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
+from datetime import datetime
+from contextlib import asynccontextmanager
 
-app = FastAPI(title="Order Service")
+from .database import get_order, init_db, save_order
+from .settings import get_settings
 
 
-PRODUCT_SERVICE_IP = os.getenv("PRODUCT_SERVICE_IP", "http://127.0.0.1")
-PRODUCT_SERVICE_PORT = os.getenv("PRODUCT_SERVICE_PORT", "8001")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
 
-PRODUCT_SERVICE_URL = PRODUCT_SERVICE_IP + ":" + PRODUCT_SERVICE_PORT
+app = FastAPI(
+    title="Order Service",
+    lifespan=lifespan,
+)
+
+
+PRODUCT_SERVICE_URL = os.getenv(
+    "PRODUCT_SERVICE_URL",
+    "http://127.0.0.1:8001",
+)
 
 
 class OrderRequest(BaseModel):
@@ -24,6 +38,15 @@ class OrderResponse(BaseModel):
     quantity: int
     unit_price: float
     total: float
+
+
+class StoredOrderResponse(BaseModel):
+    id: int
+    product_id: str
+    quantity: int
+    unit_price: float
+    total: float
+    created_at: datetime
 
 
 class ProductFromService(BaseModel):
@@ -44,11 +67,20 @@ async def create_order(order: OrderRequest) -> OrderResponse:
 
     if not product.available:
         raise HTTPException(
-            status_code=401,
+            status_code=400,
             detail=f"Product '{order.product_id}' is not available",
         )
 
     total = product.price * order.quantity
+
+    order_id = save_order(
+        {
+            "product_id": product.id,
+            "quantity": order.quantity,
+            "unit_price": product.price,
+            "total": total,
+        }
+    )
 
     return OrderResponse(
         product_id=product.id,
@@ -56,6 +88,26 @@ async def create_order(order: OrderRequest) -> OrderResponse:
         unit_price=product.price,
         total=total,
     )
+
+@app.get("/orders/{order_id}", response_model=StoredOrderResponse)
+def read_order(order_id: int) -> StoredOrderResponse:
+    saved_order = get_order(order_id)
+
+    if saved_order is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Order '{order_id}' was not found",
+        )
+
+    return StoredOrderResponse(
+        id=saved_order["id"],
+        product_id=saved_order["product_id"],
+        quantity=saved_order["quantity"],
+        unit_price=float(saved_order["unit_price"]),
+        total=float(saved_order["total"]),
+        created_at=saved_order["created_at"],
+    )
+
 
 
 async def fetch_product(product_id: str) -> ProductFromService:
