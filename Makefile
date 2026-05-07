@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := help
+
 POETRY := ~/code/venvs/fossdev/bin/poetry
 PRODUCT_SERVICE_IP ?= 127.0.0.1
 PRODUCT_SERVICE_PORT ?= 8001
@@ -15,3 +17,20 @@ run_order:
 
 run_product:
 	cd product_service && $(POETRY) run uvicorn src.app.main:app --host $(PRODUCT_SERVICE_IP) --port $(PRODUCT_SERVICE_PORT)
+
+create-practice:
+ifndef PRACTICE
+  $(error must pass val via PRACTICE)
+endif
+		@echo "Creating practice"
+		mkdir -p $(PRACTICE)
+	  cp PracticeMakefile $(PRACTICE)/Makefile
+
+remove-practice:
+ifndef PRACTICE
+  $(error must pass val via PRACTICE)
+endif
+	rm -rf $(PRACTICE)
+
+help:
+	@echo "This makefile for repo-level activity"
