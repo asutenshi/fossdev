@@ -6,6 +6,15 @@ services:
     networks:
       - test_network
 
+  discount-service:
+    build: ./discount_service/
+    ports:
+      - "8003:8000"
+    depends_on:
+      - product-service
+    networks:
+      - test_network
+
   order-service:
     build: ./order_service/
     ports:
@@ -13,8 +22,11 @@ services:
     environment:
       PRODUCT_SERVICE_IP: http://product-service
       PRODUCT_SERVICE_PORT: 8000
+      DISCOUNT_SERVICE_IP: http://discount-service
+      DISCOUNT_SERVICE_PORT: 8000
     depends_on:
       - product-service
+      - discount-service
     networks:
       - test_network
 
