@@ -1,15 +1,11 @@
 services:
   product-service:
     build: ./product_service/
-    ports:
-      - "8001:8000"
     networks:
       - test_network
 
   discount-service:
     build: ./discount_service/
-    ports:
-      - "8003:8000"
     depends_on:
       - product-service
     networks:
